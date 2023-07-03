@@ -39,7 +39,6 @@ ALLOWED_HOSTS = [
     '8000-robwarcode-djangorestsa-xeet1zhqew7.ws-eu101.gitpod.io'
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,6 +50,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    'rest_framework',
     'profiles',
 ]
 
