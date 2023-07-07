@@ -10,12 +10,12 @@ class CommentList(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
 
     def perform_create(self, serializer):
-        serializer.save(self.request.user)
+        serializer.save(owner=self.request.user)
 
 
 class CommentDetails(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
-    serializer = CommentDetailsSerializer
+    serializer_class = CommentDetailsSerializer
     queryset = Comment.objects.all()
 
 
