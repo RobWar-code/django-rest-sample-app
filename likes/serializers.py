@@ -5,7 +5,7 @@ from .models import Like
 class LikeSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
 
-    Meta:
+    class Meta:
         model = Like
         fields = ['owner', 'post', 'created_at']
 
