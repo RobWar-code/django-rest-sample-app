@@ -1,6 +1,6 @@
-from django.http import Http404
+from django.db.models import Count
 # Add Default permissions here
-from rest_framework import generics, status, permissions
+from rest_framework import generics, permissions, filters
 from .models import Post
 from .serializers import PostSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
@@ -11,7 +11,24 @@ class PostList(generics.ListCreateAPIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
-    queryset = Post.objects.all()
+    queryset = Post.objects.annotate(
+        # Note that the link from profile to post is via 
+        # the owner field of profile
+        comments_count = Count('comments__post', distinct=True),
+        likes_count = Count('likes__post', distinct=True),
+    ).order_by('-created_at')
+    filter_backends = [
+        filters.OrderingFilter
+    ]
+    ordering_fields = [
+        'comments_count',
+        'likes_count',
+        # Note that these fields exist already so do not
+        # need to go in the queryset
+        'comments__post__created_at',
+        'likes__post__created_at'
+    ]
+
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -22,5 +39,10 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
     # Add the permissions features
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Post.objects.all()
+    queryset = Post.objects.annotate(
+        # Note that the link from profile to post is via 
+        # the owner field of profile
+        comments_count = Count('comments__post', distinct=True),
+        likes_count = Count('likes__post', distinct=True),
+    ).order_by('-created_at')
 

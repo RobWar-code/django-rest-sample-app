@@ -7,6 +7,10 @@ class PostSerializer(serializers.ModelSerializer):
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
 
+    # Additional fields established in views
+    likes_count = serializers.ReadOnlyField()
+    comments_count = serializers.ReadOnlyField()
+
     # Add a field
     is_owner = serializers.SerializerMethodField()
     like_id = serializers.SerializerMethodField()
@@ -44,5 +48,6 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'created_at', 'updated_at', 'title',
             'content','image', 'image_filter', 'profile_id',
-            'profile_image', 'is_owner', 'like_id'
+            'profile_image', 'is_owner', 'like_id',
+            'likes_count', 'comments_count'
         ]
