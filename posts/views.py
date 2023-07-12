@@ -1,6 +1,8 @@
 from django.db.models import Count
 # Add Default permissions here
 from rest_framework import generics, permissions, filters
+# Filters API
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Post
 from .serializers import PostSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
@@ -20,7 +22,17 @@ class PostList(generics.ListCreateAPIView):
     filter_backends = [
         filters.OrderingFilter,
         # The search option
-        filters.SearchFilter
+        filters.SearchFilter,
+        # API filter
+        DjangoFilterBackend
+    ]
+    filterset_fields = [
+        # The profile of every follower of user's posts
+        'owner__followed__owner__profile',
+        # Every post liked by a user with a given profile, beginning with posts
+        'likes__owner__profile',
+        # Every post with the given profile_id, beginning with the post
+        'owner__profile'
     ]
     search_fields = [
         'owner__username',

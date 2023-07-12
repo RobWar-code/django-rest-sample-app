@@ -1,5 +1,6 @@
 from django.db.models import Count
 from rest_framework import generics, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Profile
 from .serializers import ProfileSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
@@ -15,7 +16,12 @@ class ProfileList(generics.ListAPIView):
         following_count = Count('owner__following', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        DjangoFilterBackend
+    ]
+    filterset_fields = [
+        # The profiles of the users being followed by the owner of the profile
+        'owner__following__followed__profile'
     ]
     ordering_fields = [
         'posts_count',
