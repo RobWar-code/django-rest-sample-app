@@ -18,7 +18,13 @@ class PostList(generics.ListCreateAPIView):
         likes_count = Count('likes__post', distinct=True),
     ).order_by('-created_at')
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        # The search option
+        filters.SearchFilter
+    ]
+    search_fields = [
+        'owner__username',
+        'title'
     ]
     ordering_fields = [
         'comments_count',
