@@ -21,7 +21,10 @@ class ProfileList(generics.ListAPIView):
     ]
     filterset_fields = [
         # The profiles of the users being followed by the owner of the profile
-        'owner__following__followed__profile'
+        'owner__following__followed__profile',
+        # The profiles of users followed by the current user 
+        # (note the use of the second owner - not following)
+        'owner__followed__owner__profile'
     ]
     ordering_fields = [
         'posts_count',
