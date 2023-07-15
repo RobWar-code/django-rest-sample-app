@@ -12,6 +12,7 @@ djangorestframework-simplejwt==5.2.2
 gunicorn==20.1.0
 oauthlib==3.2.2
 Pillow==10.0.0
+psycopg2==2.9.6
 PyJWT==2.7.0
 pyscopg2==66.0.2
 python3-openid==3.2.0
