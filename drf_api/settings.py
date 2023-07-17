@@ -39,7 +39,7 @@ DEBUG = 'DEV' in os.environ
 ALLOWED_HOSTS = [
     'localhost',
     '8000-robwarcode-djangorestsa-xeet1zhqew7.ws-eu101.gitpod.io',
-    'dj_rest_profiles.herokuapp.com'
+    'dj-rest-profiles.herokuapp.com'
 ]
 
 # Application definition
