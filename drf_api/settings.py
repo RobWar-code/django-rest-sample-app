@@ -74,7 +74,7 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 REST_FRAMEWORK = {
-    'DEFAULT_IDENTIFICATION CLASSES' : [(
+    'DEFAULT_AUTHENTICATION_CLASSES' : [(
         'rest_framework.authentication.SessionAuthentication'
         if 'DEV' in os.environ
         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
