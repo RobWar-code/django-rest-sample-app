@@ -16,8 +16,8 @@ class PostList(generics.ListCreateAPIView):
     queryset = Post.objects.annotate(
         # Note that the link from profile to post is via 
         # the owner field of profile
-        comments_count = Count('comments__post', distinct=True),
-        likes_count = Count('likes__post', distinct=True),
+        comments_count = Count('comments', distinct=True),
+        likes_count = Count('likes', distinct=True),
     ).order_by('-created_at')
     filter_backends = [
         filters.OrderingFilter,
